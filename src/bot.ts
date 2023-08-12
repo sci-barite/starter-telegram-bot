@@ -1,5 +1,4 @@
 import { Bot, InlineKeyboard, webhookCallback } from "grammy";
-import { chunk } from "lodash";
 import express from "express";
 import { applyTextEffect, Variant } from "./textEffects";
 
@@ -50,8 +49,13 @@ const effectsKeyboardAccessor = (effectCodes: string[]) => {
     );
   const effects = effectsAccessor(effectCodes);
 
+  const create3ColsTable = (inputArray: any[]): any[][] =>
+    Array.from({ length: Math.ceil(inputArray.length / 3) }, (_, index) =>
+      inputArray.slice(index * 3, index * 3 + 3)
+    );
+
   const keyboard = new InlineKeyboard();
-  const chunkedEffects = chunk(effects, 3);
+  const chunkedEffects = create3ColsTable(effects);
   for (const effectsChunk of chunkedEffects) {
     for (const effect of effectsChunk) {
       effect &&
