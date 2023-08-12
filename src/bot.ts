@@ -37,6 +37,10 @@ const allEffects: Effect[] = [
     code: "q",
     label: "Squared",
   },
+  {
+    code: "m",
+    label: "M type",
+  },
 ];
 
 const effectCallbackCodeAccessor = (effectCode: TextEffectVariant) =>
