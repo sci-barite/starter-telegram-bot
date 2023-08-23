@@ -218,7 +218,7 @@ if (process.env.NODE_ENV === "production") {
   async function youGotMail(ctx: Context) {
     try {
       console.log('Handling...');
-      ctx.reply('GOTCHA! ' + ctx.message!.text);
+      ctx.reply('GOTCHA! ' + ctx.message);
     } catch(error) {
       console.error('Error handling incoming:', error);
     }   
