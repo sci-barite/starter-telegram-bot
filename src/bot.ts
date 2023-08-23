@@ -3,6 +3,9 @@ import express from "express";
 import { applyTextEffect, Variant } from "./textEffects";
 
 import type { Variant as TextEffectVariant } from "./textEffects";
+import fetch from "node-fetch";
+
+const props = [] as string[];
 
 // Create a bot using the Telegram token
 const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
@@ -177,6 +180,8 @@ bot.api.setMyCommands([
 // Handle all other messages and the /start command
 const introductionMessage = `Hello! I'm a Telegram bot.
 I'm powered by Cyclic, the next-generation serverless computing platform.
+Here are some properties dynamically retrieved from Google Sheets:
+${props}
 
 <b>Commands</b>
 /yo - Be greeted by me
@@ -191,13 +196,15 @@ const replyWithIntro = (ctx: any) =>
 bot.command("start", replyWithIntro);
 bot.on("message", replyWithIntro);
 
+const GAS = 'https://script.google.com/macros/s/AKfycbx6id995t-ajusNoAeqfmM6awzQ8chavLH0oI0yMVghxxiooQQ63M8n5sqJtWhiD1SPRg/exec';
+
 // Start the server
 if (process.env.NODE_ENV === "production") {
   // Use Webhooks for the production server
   const app = express();
   app.use(express.json());
   app.use(webhookCallback(bot, "express"));
-
+  (async () => { props.push((JSON.stringify((await fetch(GAS + '?request=gimmeProps')).json()))) })(); 
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Bot listening on port ${PORT}`);
