@@ -216,7 +216,8 @@ if (process.env.NODE_ENV === "production") {
   });
 
   async function youGotMail(data: any) {
-    const {chatId, userId, messageText} = data;
+    const {chatId, userId, messageText} = JSON.parse(data);
+    console.log(data, chatId, userId, messageText);
     await bot.api.sendMessage(chatId, "Received from " + userId + ": " + messageText);
   }
 
