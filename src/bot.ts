@@ -216,9 +216,13 @@ if (process.env.NODE_ENV === "production") {
   });
 
   async function youGotMail(data: any) {
-    const {chatId, userId, messageText} = JSON.parse(data);
-    console.log(data, chatId, userId, messageText);
-    await bot.api.sendMessage(chatId, "Received from " + userId + ": " + messageText);
+    try {
+      const {chatId, userId, messageText} = data;
+      console.log(data, chatId, userId, messageText);
+      await bot.api.sendMessage(chatId, "Received from " + userId + ": " + messageText);
+    } catch(error) {
+      console.error('Error handling incoming:', error);
+    }   
   }
 
   const PORT = process.env.PORT || 3000;
