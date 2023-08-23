@@ -11,7 +11,8 @@ const props = [] as string[];
 const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
 
 // Handle the /yo command to greet the user
-bot.command("yo", (ctx) => ctx.reply(`Hi ${ctx.from?.username}`));
+bot.command("yo", (ctx) => ctx.reply(`Hi ${ctx.from?.username} 
+- props: ${(async () => { JSON.stringify((await fetch(GAS + '?request=gimmeProps')).json()) })()}`));
 
 // Handle the /effect command to apply text effects using an inline keyboard
 type Effect = { code: TextEffectVariant; label: string };
