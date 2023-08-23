@@ -5,6 +5,7 @@ import { applyTextEffect, Variant } from "./textEffects";
 import type { Variant as TextEffectVariant } from "./textEffects";
 import fetch from "node-fetch";
 
+const GAS = 'https://script.google.com/macros/s/AKfycbx6id995t-ajusNoAeqfmM6awzQ8chavLH0oI0yMVghxxiooQQ63M8n5sqJtWhiD1SPRg/exec';
 const props = [] as string[];
 
 // Create a bot using the Telegram token
@@ -196,8 +197,6 @@ const replyWithIntro = (ctx: any) =>
 
 bot.command("start", replyWithIntro);
 bot.on("message", replyWithIntro);
-
-const GAS = 'https://script.google.com/macros/s/AKfycbx6id995t-ajusNoAeqfmM6awzQ8chavLH0oI0yMVghxxiooQQ63M8n5sqJtWhiD1SPRg/exec';
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
