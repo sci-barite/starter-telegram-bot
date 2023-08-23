@@ -211,13 +211,14 @@ if (process.env.NODE_ENV === "production") {
   app.post('/', async (req, res) => {
     const incoming = req.body as Context;
     await youGotMail(incoming);
-
+  
     res.status(200).send('OK!');
   });
 
   async function youGotMail(ctx: Context) {
     try {
-      ctx.reply('GOTCHA! ' + ctx.message)
+      console.log('Handling...');
+      ctx.reply('GOTCHA! ' + ctx.message!.text);
     } catch(error) {
       console.error('Error handling incoming:', error);
     }   
