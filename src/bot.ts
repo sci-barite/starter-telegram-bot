@@ -1,4 +1,4 @@
-import { Bot, InlineKeyboard, webhookCallback } from "grammy";
+import { Bot, Context, InlineKeyboard, webhookCallback } from "grammy";
 import express from "express";
 import { applyTextEffect, Variant } from "./textEffects";
 
@@ -209,17 +209,15 @@ if (process.env.NODE_ENV === "production") {
   app.use(webhookCallback(bot, "express"));
 
   app.post('/', async (req, res) => {
-    const incoming = req.body;
+    const incoming = req.body as Context;
     await youGotMail(incoming);
 
     res.status(200).send('OK!');
   });
 
-  async function youGotMail(data: any) {
+  async function youGotMail(ctx: Context) {
     try {
-      const {chatId, userId, messageText} = data;
-      console.log(data, chatId, userId, messageText);
-      await bot.api.sendMessage(chatId, "Received from " + userId + ": " + messageText);
+      ctx.reply('GOTCHA! ' + ctx.message)
     } catch(error) {
       console.error('Error handling incoming:', error);
     }   
