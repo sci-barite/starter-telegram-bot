@@ -207,7 +207,7 @@ if (process.env.NODE_ENV === "production") {
   const app = express();
   app.use(express.json());
   app.use(webhookCallback(bot, "express"));
-  (async () => { props.push((JSON.stringify((await fetch(GAS + '?request=gimmeProps')).json()))) })(); 
+
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Bot listening on port ${PORT}`);
