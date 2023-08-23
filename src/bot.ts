@@ -15,7 +15,7 @@ const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
 bot.command("yo", async (ctx) => {
   const resp = await fetch(GAS + '?request=gimmeProps&chatId=' + ctx.chat.id + '&userId=' + ctx.from?.username);
   const data = await resp.json();
-  ctx.reply(`Hi ${ctx.from?.username} - reply: ${data.chatId + ' ' + data.userId + ': expect another message at ' + data.message}`);
+  ctx.reply(`Hi ${ctx.from?.username} - reply: ${data.chatId + ' ' + data.userId + ': ' + data.message}`);
 });
 
 // Handle the /effect command to apply text effects using an inline keyboard
@@ -199,7 +199,7 @@ const replyWithIntro = (ctx: any) =>
   });
 
 bot.command("start", replyWithIntro);
-bot.on("message", replyWithIntro);
+//bot.on("message", replyWithIntro);
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
