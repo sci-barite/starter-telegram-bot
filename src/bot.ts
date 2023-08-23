@@ -14,8 +14,8 @@ const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
 // Handle the /yo command to greet the user
 bot.command("yo", async (ctx) => {
   const resp = await fetch(GAS + '?request=gimmeProps');
-  const data = await resp.json();
-  ctx.reply(`Hi ${ctx.from?.username} - props: ${JSON.stringify(data)}`)
+  const data = await resp.text();
+  ctx.reply(`Hi ${ctx.from?.username} - props: ${data}`)
 });
 
 // Handle the /effect command to apply text effects using an inline keyboard
