@@ -13,9 +13,9 @@ const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
 
 // Handle the /yo command to greet the user
 bot.command("yo", async (ctx) => {
-  const resp = await fetch(GAS + '?request=gimmeProps');
-  const data = await resp.text();
-  ctx.reply(`Hi ${ctx.from?.username} - props: ${data}`)
+  const resp = await fetch(GAS + '?request=gimmeProps&chatId=' + ctx.chat.id + '&userId=' + ctx.from?.username);
+  const data = await resp.json();
+  ctx.reply(`Hi ${ctx.from?.username} - reply: ${data.chatId + ' ' + data.userId + ': expect another message at ' + data.message}`);
 });
 
 // Handle the /effect command to apply text effects using an inline keyboard
@@ -207,6 +207,18 @@ if (process.env.NODE_ENV === "production") {
   const app = express();
   app.use(express.json());
   app.use(webhookCallback(bot, "express"));
+
+  app.post('/', async (req, res) => {
+    const incoming = req.body;
+    await youGotMail(incoming);
+
+    res.status(200).send('OK!');
+  });
+
+  async function youGotMail(data: any) {
+    const {chatId, userId, messageText} = data;
+    await bot.api.sendMessage(chatId, "Received from " + userId + ": " + messageText);
+  }
 
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
