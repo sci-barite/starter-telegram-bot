@@ -5,7 +5,7 @@ import { applyTextEffect, Variant } from "./textEffects";
 import type { Variant as TextEffectVariant } from "./textEffects";
 import fetch from "node-fetch";
 
-const GAS = 'https://script.google.com/macros/s/AKfycbx6id995t-ajusNoAeqfmM6awzQ8chavLH0oI0yMVghxxiooQQ63M8n5sqJtWhiD1SPRg/exec';
+const GAS = 'https://script.google.com/macros/s/AKfycbxIHrLbrNYOkh8dyJ9GX3wxwT2AfFac5idEvTAIdH9FeVSqIwVn_iw0yIWuDVPzYcaQ/exec';
 const props = [] as string[];
 
 // Create a bot using the Telegram token
@@ -13,8 +13,8 @@ const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
 
 // Handle the /yo command to greet the user
 bot.command("yo", async (ctx) => {
-  const resp = await fetch(GAS + '?request=gimmeProps&ctx=' + JSON.stringify(ctx));
-  const data = await resp.json();
+  const resp = await fetch(GAS + '?request=findLocation');
+  const data = await resp.text();
   ctx.reply(`Hi ${ctx.from?.username} - reply: ${JSON.stringify(data)}`);
 });
 
