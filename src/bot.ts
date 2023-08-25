@@ -14,8 +14,7 @@ const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
 // Handle the /yo command to greet the user
 bot.command("yo", async (ctx) => {
   const resp = await fetch(GAS + '?request=findLocation');
-  const data = await resp.json();
-  ctx.reply(`Hi ${ctx.from?.username} - reply: ${JSON.stringify(data)}`);
+  ctx.reply(`Hi ${ctx.from?.username} - reply: Ok!`);
 });
 
 // Handle the /effect command to apply text effects using an inline keyboard
